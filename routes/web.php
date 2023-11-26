@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () { 
 	Route::get('user/index', [UserManagementController::class, 'index'])->name('user.index');
 });
 
