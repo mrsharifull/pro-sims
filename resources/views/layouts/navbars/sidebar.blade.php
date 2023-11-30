@@ -10,11 +10,33 @@
                     <p>{{ _('Dashboard') }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'user') class="active " @endif>
-                <a href="{{route('user.index')}}">
-                    <i class="tim-icons icon-single-02"></i>
-                    <p>{{ _('Users') }}</p>
+            <li>
+                <a data-toggle="collapse" href="#um"
+                @if ($pageSlug == 'user') 
+                    aria-expanded="true"
+                @endif
+                
+                 
+                 >
+                    <i class="fab fa-laravel" ></i>
+                    <span class="nav-link-text" >{{ __('User Management') }}</span>
+                    <b class="caret mt-1"></b>
                 </a>
+
+                <div class="collapse
+                @if ($pageSlug == 'user') 
+                    show
+                @endif
+                " id="um">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'user') class="active " @endif>
+                            <a href="{{ route('um.user.index')  }}">
+                                <i class="tim-icons icon-single-02"></i>
+                                <p>{{ _('User') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             {{-- <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">

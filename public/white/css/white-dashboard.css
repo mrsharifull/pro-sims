@@ -17766,8 +17766,8 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .full-page>.content {
-  padding-bottom: 150px;
-  padding-top: 150px;
+  padding-bottom: 80px;
+  padding-top: 80px;
 }
 
 .full-page .footer {
@@ -17848,8 +17848,8 @@ Copyright (c) 2015 Daniel Eden
 .card-register .card-img {
   position: absolute;
   left: 0;
-  top: -15%;
-  width: 70%;
+  top: 0;
+  width: 100%;
 }
 
 .full-page.register-page .info-horizontal {
