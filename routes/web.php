@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
 			Route::post('create', [UserManagementController::class, 'store'])->name('create');
 			Route::get('edit/{id}', [UserManagementController::class, 'edit'])->name('edit');
 			Route::put('edit/{id}', [UserManagementController::class, 'update'])->name('edit');
+			Route::get('status/{id}', [UserManagementController::class, 'status'])->name('status.edit');
 			Route::get('delete/{id}', [UserManagementController::class, 'delete'])->name('delete');
 		});
 

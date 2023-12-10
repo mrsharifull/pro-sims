@@ -27,7 +27,11 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
                                     <th>Creation Date</th>
+                                    <th>Creadted By</th>
+                                    <th>Updated By</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -36,7 +40,15 @@
                                 <tr>
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
+                                    <td>{{$user->role->name}}</td>
+                                    <td>
+                                        <span class="badge {{$user->status == 1 ? 'badge-success' : 'badge-warning'}}">
+                                            {{$user->status == 1 ? 'Active' : 'Disabled'}}
+                                        </span>
+                                    </td>
                                     <td>{{date('d M, Y', strtotime($user->created_at))}}</td>
+                                    <td>{{$user->createdBy->name ?? "System Generated"}}</td>
+                                    <td>{{$user->updatedBy->name ?? "System Generated"}}</td>
                                     <td class="text-center">
                                         <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
@@ -46,6 +58,7 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
                                                 x-placement="top-end"
                                                 style="position: absolute; transform: translate3d(-57px, -60px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a class="dropdown-item" href="{{route('um.user.status.edit',$user->id)}}">{{$user->getStatusBtn()}}</a>
                                                 <a class="dropdown-item" href="{{route('um.user.edit',$user->id)}}">Update</a>
                                                 <a class="dropdown-item" onclick="alert('Are you sure?')" href="{{route('um.user.delete',$user->id)}}">Delete</a>
                                             </div>

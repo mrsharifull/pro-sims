@@ -41,6 +41,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|min:4',
+            'role' => 'required',
 
         ]
         +

@@ -45,4 +45,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function deletedBy(){
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+    public function getStatusBtn(){
+        if($this->status == 1){
+            return 'Disabled';
+        }else{
+            return 'Active';
+        }
+    }
+
+
 }

@@ -33,6 +33,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->unique(['name', 'guard_name']);
+            $table->softDeletes();
             $this->addCommonColumns($table);
         });
 
@@ -50,6 +51,7 @@ return new class extends Migration
             } else {
                 $table->unique(['name', 'guard_name']);
             }
+            $table->softDeletes();
             $this->addCommonColumns($table);
         });
 
@@ -137,9 +139,11 @@ return new class extends Migration
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
         Schema::table('roles', function (Blueprint $table) {
+            $table->dropSoftDeletes();
             $this->dropCommonColumns($table);
         });
         Schema::table('permissions', function (Blueprint $table) {
+            $table->dropSoftDeletes();
             $this->dropCommonColumns($table);
         });
     }

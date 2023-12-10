@@ -33,6 +33,17 @@
                       @enderror
                     </div>
                     <div class="form-group">
+                      <label>Role</label>
+                      <select name="role" class="form-control">
+                          @foreach ($roles as $role)
+                            <option  value="{{$role->id}}" {{$role->id == $user->role_id ? 'selected' : ''}}>{{$role->name}}</option>
+                          @endforeach
+                      </select>
+                      @error('role')
+                          <span class="text-danger">{{$message}}</span>
+                      @enderror
+                    </div>
+                    <div class="form-group">
                       <label>Password</label>
                       <input type="password" name="password" class="form-control" placeholder="Enter new password">
                       @error('password')
