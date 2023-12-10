@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserManagementController;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,17 +45,39 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
-Route::group(['middleware' => 'auth'], function () { 
+Route::group(['middleware' => ['auth', 'permission']], function () {
+
+	Route::get('/export-permissions', function () {
+		$filename = 'permissions.csv';
+		$filePath = createCSV($filename);
+	
+		return Response::download($filePath, $filename);
+	})->name('export.permissions');
 
 	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
 		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
-			Route::get('index', [UserManagementController::class, 'index'])->name('index');
-			Route::get('create', [UserManagementController::class, 'create'])->name('create');
-			Route::post('create', [UserManagementController::class, 'store'])->name('create');
-			Route::get('edit/{id}', [UserManagementController::class, 'edit'])->name('edit');
-			Route::put('edit/{id}', [UserManagementController::class, 'update'])->name('edit');
-			Route::get('status/{id}', [UserManagementController::class, 'status'])->name('status.edit');
-			Route::get('delete/{id}', [UserManagementController::class, 'delete'])->name('delete');
+			Route::get('index', [UserManagementController::class, 'index'])->name('user_list');
+			Route::get('create', [UserManagementController::class, 'create'])->name('user_create');
+			Route::post('create', [UserManagementController::class, 'store'])->name('user_create');
+			Route::get('edit/{id}', [UserManagementController::class, 'edit'])->name('user_edit');
+			Route::put('edit/{id}', [UserManagementController::class, 'update'])->name('user_edit');
+			Route::get('status/{id}', [UserManagementController::class, 'status'])->name('status.user_edit');
+			Route::get('delete/{id}', [UserManagementController::class, 'delete'])->name('user_delete');
+		});
+		Route::group(['as' => 'permission.', 'prefix' => 'permission'], function () {
+			Route::get('index', [UserManagementController::class, 'p_index'])->name('permission_list');
+			Route::get('create', [UserManagementController::class, 'P_create'])->name('permission_create');
+			Route::post('create', [UserManagementController::class, 'p_store'])->name('permission_create');
+			Route::get('edit/{id}', [UserManagementController::class, 'p_edit'])->name('permission_edit');
+			Route::put('edit/{id}', [UserManagementController::class, 'p_update'])->name('permission_edit');
+		});
+		Route::group(['as' => 'role.', 'prefix' => 'role'], function () {
+			Route::get('index', [UserManagementController::class, 'r_index'])->name('role_list');
+			Route::get('create', [UserManagementController::class, 'r_create'])->name('role_create');
+			Route::post('create', [UserManagementController::class, 'r_store'])->name('role_create');
+			Route::get('edit/{id}', [UserManagementController::class, 'r_edit'])->name('role_edit');
+			Route::put('edit/{id}', [UserManagementController::class, 'r_update'])->name('role_edit');
+			Route::get('delete/{id}', [UserManagementController::class, 'r_delete'])->name('role_delete');
 		});
 
 	});

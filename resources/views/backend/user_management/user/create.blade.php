@@ -10,12 +10,12 @@
                             <h4 class="card-title">{{__('Create User')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{route('um.user.index')}}" class="btn btn-sm btn-primary">{{__('Back')}}</a>
+                            <a href="{{route('um.user.user_list')}}" class="btn btn-sm btn-primary">{{__('Back')}}</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                  <form  method="POST" action="{{route('um.user.create')}}">
+                  <form  method="POST" action="{{route('um.user.user_create')}}">
                     @csrf
                     <div class="form-group">
                         

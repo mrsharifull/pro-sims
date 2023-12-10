@@ -12,7 +12,11 @@
             </li>
             <li>
                 <a data-toggle="collapse" href="#um"
-                @if ($pageSlug == 'user') 
+                @if (
+                    $pageSlug == 'user' ||
+                    $pageSlug == 'permission'||
+                    $pageSlug == 'role'
+                ) 
                     aria-expanded="true"
                 @endif
                 
@@ -24,15 +28,31 @@
                 </a>
 
                 <div class="collapse
-                @if ($pageSlug == 'user') 
+                @if (
+                    $pageSlug == 'user'||
+                    $pageSlug == 'permission'||
+                    $pageSlug == 'role'
+                ) 
                     show
                 @endif
                 " id="um">
                     <ul class="nav pl-4">
                         <li @if ($pageSlug == 'user') class="active " @endif>
-                            <a href="{{ route('um.user.index')  }}">
+                            <a href="{{ route('um.user.user_list')  }}">
                                 <i class="tim-icons icon-single-02"></i>
                                 <p>{{ _('User') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'permission') class="active " @endif>
+                            <a href="{{ route('um.permission.permission_list')  }}">
+                                <i class="tim-icons icon-single-02"></i>
+                                <p>{{ _('Permission') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'role') class="active " @endif>
+                            <a href="{{ route('um.role.role_list')  }}">
+                                <i class="tim-icons icon-single-02"></i>
+                                <p>{{ _('Role') }}</p>
                             </a>
                         </li>
                     </ul>

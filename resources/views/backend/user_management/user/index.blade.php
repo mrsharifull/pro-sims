@@ -16,7 +16,7 @@
                             <h4 class="card-title">User List</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{route('um.user.create')}}" class="btn btn-sm btn-primary">{{__('Add User')}}</a>
+                            <a href="{{route('um.user.user_create')}}" class="btn btn-sm btn-primary">{{__('Add User')}}</a>
                         </div>
                     </div>
                 </div>
@@ -58,9 +58,9 @@
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
                                                 x-placement="top-end"
                                                 style="position: absolute; transform: translate3d(-57px, -60px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a class="dropdown-item" href="{{route('um.user.status.edit',$user->id)}}">{{$user->getStatusBtn()}}</a>
-                                                <a class="dropdown-item" href="{{route('um.user.edit',$user->id)}}">Update</a>
-                                                <a class="dropdown-item" onclick="alert('Are you sure?')" href="{{route('um.user.delete',$user->id)}}">Delete</a>
+                                                <a class="dropdown-item" href="{{route('um.user.status.user_edit',$user->id)}}">{{$user->getStatusBtn()}}</a>
+                                                <a class="dropdown-item" href="{{route('um.user.user_edit',$user->id)}}">Update</a>
+                                                <a class="dropdown-item" onclick="alert('Are you sure?')" href="{{route('um.user.user_delete',$user->id)}}">Delete</a>
                                             </div>
                                         </div>
                                     </td>
