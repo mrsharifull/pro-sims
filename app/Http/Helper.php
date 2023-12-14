@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 function get_permission_routes()
 {
   return [
-            'about.faq.'
+            'um.'
 
         ];
 }

@@ -128,8 +128,8 @@ class UserManagementController extends Controller
         $role->created_by = auth()->user()->id;
         $role->save();
 
-
-        $role->givePermissionTo($req->permissions);
+        $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
+        $role->givePermissionTo($permissions);
         return redirect()->route('um.role.role_list')->with('success',"$role->name role created successfully");   
 
 
