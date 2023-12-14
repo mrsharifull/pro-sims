@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionRequest;
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
@@ -104,7 +105,7 @@ class UserManagementController extends Controller
 
 
 
-    // User Methods 
+    // Role Methods 
     public function r_index(){
         $s['roles'] = Role::where('deleted_at', null)->with('permissions')->latest()->get()
         ->map(function($role){
@@ -114,21 +115,25 @@ class UserManagementController extends Controller
         });
         return view('backend.user_management.role.index', $s);
     }
-    // public function r_create(){
-    //     $s['roles'] = Role::where('deleted_at',null)->latest()->get();
-    //     return view('backend.user_management.user.create',$s);
-    // }
-    // public function r_store(UserRequest $req){
-    //     $user = new User();
-    //     $user->name = $req->name;
-    //     $user->email = $req->email;
-    //     $user->role_id = $req->role;
-    //     $user->password = Hash::make($req->password);
-    //     $user->created_by = auth()->user()->id;
-    //     $user->save();
-    //     $user->assignRole($user->role->name);
-    //     return redirect()->route('um.user.user_list')->with('success',"$user->name created successfully");     
-    // }
+    public function r_create(){
+        $permissions = Permission::orderBy('name')->get();
+        $s['groupedPermissions'] = $permissions->groupBy(function ($permission) {
+            return $permission->prefix;
+        });
+        return view('backend.user_management.role.create',$s);
+    }
+    public function r_store(RoleRequest $req){
+        $role = new Role();
+        $role->name = $req->name;
+        $role->created_by = auth()->user()->id;
+        $role->save();
+
+
+        $role->givePermissionTo($req->permissions);
+        return redirect()->route('um.role.role_list')->with('success',"$role->name role created successfully");   
+
+
+    }
     // public function r_edit($id){
     //     $s['user'] = User::with('role')->first();
     //     $s['roles'] = Role::where('deleted_at',null)->latest()->get();
