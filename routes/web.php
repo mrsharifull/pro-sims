@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Response;
 
 
 use App\Http\Controllers\Backend\UserManagementController;
+use App\Http\Controllers\Backend\Setup\ClassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 		return Response::download($filePath, $filename);
 	})->name('export.permissions');
 
+	// User Management Routes 
 	Route::group(['as' => 'um.', 'prefix' => 'user-management'], function () {
 		Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
 			Route::get('index', [UserManagementController::class, 'index'])->name('user_list');
@@ -89,6 +91,23 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 		});
 
 	});
+
+	// Setup Routes 
+	Route::group(['as' => 'setup.', 'prefix' => 'setup'], function () {
+		// Class Routes 
+		Route::group(['as' => 'class.', 'prefix' => 'class'], function () {
+			Route::get('index', [ClassController::class, 'index'])->name('class_list');
+			Route::get('details/{id}', [ClassController::class, 'details'])->name('details.class_list');
+			Route::get('create', [ClassController::class, 'create'])->name('class_create');
+			Route::post('create', [ClassController::class, 'store'])->name('class_create');
+			Route::get('edit/{id}', [ClassController::class, 'edit'])->name('class_edit');
+			Route::put('edit/{id}', [ClassController::class, 'update'])->name('class_edit');
+			Route::get('status/{id}', [ClassController::class, 'status'])->name('status.class_edit');
+			Route::get('delete/{id}', [ClassController::class, 'delete'])->name('class_delete');
+		});
+
+	});
+
 
 	
 });

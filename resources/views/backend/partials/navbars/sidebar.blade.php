@@ -46,6 +46,33 @@
                 </div>
             </li>
 
+            
+            {{-- Setup --}}
+            <li>
+                <a class="@if(
+                        $pageSlug == 'class'
+                    )@else collapsed @endif" data-toggle="collapse" href="#setup" @if (
+                        $pageSlug == 'class'
+                    ) aria-expanded='true' @else aria-expanded='false' @endif>
+                    
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span class="nav-link-text" >{{ __('Setup') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse @if (
+                    $pageSlug == 'class'
+                ) show @endif" id="setup">
+                    <ul class="nav pl-2">
+                        @include('backend.partials.menu_buttons', [
+                            'menuItems' => [
+                                ['pageSlug' => 'class', 'routeName' => 'setup.class.class_list', 'label' => 'Class'],
+                            ]
+                        ])
+                    </ul>
+                </div>
+            </li>
+
 
             
             {{-- <li @if ($pageSlug == 'icons') class="active " @endif>
