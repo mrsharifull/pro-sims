@@ -9,14 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
-
-    public function changeStatus($model){
-        if($model->status == 1){
-            $model->status = 0;
+    public function statusChange($modelData)
+    {
+        if($modelData->status == 1){
+            $modelData->status = 0;
         }else{
-            $model->status = 1;
+            $modelData->status = 1;
         }
-        $model->save();
+        $modelData->updated_by = auth()->user()->id;
+        $modelData->save();
     }
 }

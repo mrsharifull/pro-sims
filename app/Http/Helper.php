@@ -5,7 +5,6 @@ use League\Csv\Writer;
 use App\Models\Permission;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -14,13 +13,16 @@ function get_permission_routes()
 {
   return [
             'um.'
-            
         ];
 }
 
 //This will check the permission of the given route name. Can be used for buttons
 function check_access_by_route_name($routeName = null): bool
 {
+    
+
+
+
     if($routeName == null){
         $routeName = Route::currentRouteName();
 
@@ -92,4 +94,5 @@ function storage_url($urlOrArray){
         return asset('storage/'.$urlOrArray);
     }
 }
+
 ?>

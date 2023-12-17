@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Role;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -45,25 +46,31 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role(){
-        return $this->belongsTo(Role::class, 'role_id');
-    }
-    public function createdBy(){
+    public function createdBy()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
-    public function updatedBy(){
+
+    public function updatedBy()
+    {
         return $this->belongsTo(User::class, 'updated_by');
     }
-    public function deletedBy(){
+
+    public function deletedBy()
+    {
         return $this->belongsTo(User::class, 'deleted_by');
     }
-    public function getBtnStatus(){
-        if($this->status == 1){
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+    public function getBtnStatus()
+    {
+        if ($this->status == 1) {
             return 'Disabled';
-        }else{
+        } else {
             return 'Active';
         }
     }
-
-
 }

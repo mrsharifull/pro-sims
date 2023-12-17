@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'user'])
+@extends('backend.layouts.master', ['pageSlug' => 'user'])
 
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                             <h4 class="card-title">{{__('Edit User')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{route('um.user.user_list')}}" class="btn btn-sm btn-primary">{{__('Back')}}</a>
+                            @include('backend.partials.button', ['routeName' => 'um.user.user_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
@@ -21,34 +21,26 @@
                     <div class="form-group">
                       <label>Name</label>
                       <input type="text" name="name" class="form-control" placeholder="Enter name" value="{{$user->name}}">
-                      @error('name')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                      @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
                       <label>Email</label>
                       <input type="email" name="email" class="form-control" placeholder="Enter email" value="{{$user->email}}">
-                      @error('email')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                      @include('alerts.feedback', ['field' => 'email'])
                     </div>
-                    <div class="form-group">
-                      <label>Role</label>
-                      <select name="role" class="form-control">
-                          @foreach ($roles as $role)
-                            <option  value="{{$role->id}}" {{$role->id == $user->role_id ? 'selected' : ''}}>{{$role->name}}</option>
-                          @endforeach
-                      </select>
-                      @error('role')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                    <div class="form-group {{ $errors->has('role') ? ' has-danger' : '' }}">
+                        <label>{{ _('Role') }}</label>
+                        <select name="role" class="form-control {{ $errors->has('role') ? ' is-invalid' : '' }}">
+                            @foreach ($roles as $role)
+                                <option {{($user->role->id == $role->id) ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
+                            @endforeach
+                        </select>
+                        @include('alerts.feedback', ['field' => 'role'])
                     </div>
                     <div class="form-group">
                       <label>Password</label>
                       <input type="password" name="password" class="form-control" placeholder="Enter new password">
-                      @error('password')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                      @include('alerts.feedback', ['field' => 'password'])
                     </div>
                     <div class="form-group">
                       <label>Confirm Password</label>

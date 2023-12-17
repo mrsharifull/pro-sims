@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Traits;
+
 use Illuminate\Database\Schema\Blueprint;
 
-trait CommonColumnsTrait{
+trait commonColumnsTrait{
 
     public function addCommonColumns(Blueprint $table): void
     {
@@ -27,8 +29,3 @@ trait CommonColumnsTrait{
         $table->dropColumn('deleted_by');
     }
 }
-
-
-
-
-?>

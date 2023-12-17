@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'permission'])
+@extends('backend.layouts.master', ['pageSlug' => 'permission'])
 
 @section('content')
     <div class="row">
@@ -10,7 +10,7 @@
                             <h4 class="card-title">{{__('Create Permission')}}</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{route('um.permission.permission_list')}}" class="btn btn-sm btn-primary">{{__('Back')}}</a>
+                            @include('backend.partials.button', ['routeName' => 'um.permission.permission_list', 'className' => 'btn-primary', 'label' => 'Back'])
                         </div>
                     </div>
                 </div>
@@ -18,21 +18,17 @@
                   <form  method="POST" action="{{route('um.permission.permission_create')}}">
                     @csrf
                     <div class="form-group">
-                      <label>Name</label>
+                      <label>{{_('Name')}}</label>
                       <input type="text" name="name" class="form-control" placeholder="Enter permission name" value="{{old('name')}}">
-                      @error('name')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                      @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group">
-                      <label>Prefix</label>
+                      <label>{{_('Prefix')}}</label>
                       <input type="text" name="prefix" class="form-control" placeholder="Enter permission prefix" value="{{old('prefix')}}">
-                      @error('prefix')
-                          <span class="text-danger">{{$message}}</span>
-                      @enderror
+                      @include('alerts.feedback', ['field' => 'prefix'])
                     </div>
-                    
-                    <button type="submit" class="btn btn-primary">Create</button>
+
+                    <button type="submit" class="btn btn-primary">{{_('Create')}}</button>
                   </form>
                 </div>
               </div>
