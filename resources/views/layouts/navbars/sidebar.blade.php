@@ -10,54 +10,40 @@
                     <p>{{ _('Dashboard') }}</p>
                 </a>
             </li>
+            {{-- User Management --}}
             <li>
-                <a data-toggle="collapse" href="#um"
-                @if (
-                    $pageSlug == 'user' ||
-                    $pageSlug == 'permission'||
-                    $pageSlug == 'role'
-                ) 
-                    aria-expanded="true"
-                @endif
-                
-                 
-                 >
-                    <i class="fab fa-laravel" ></i>
+                <a class="@if(
+                        $pageSlug == 'role' ||
+                        $pageSlug == 'permission'||
+                        $pageSlug == 'user'
+                    )@else collapsed @endif" data-toggle="collapse" href="#user-management" @if (
+                        $pageSlug == 'role' ||
+                        $pageSlug == 'permission'||
+                        $pageSlug == 'user'
+                    ) aria-expanded='true' @else aria-expanded='false' @endif>
+                    
+                    <i class="fa-solid fa-users-gear"></i>
                     <span class="nav-link-text" >{{ __('User Management') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                <div class="collapse
-                @if (
-                    $pageSlug == 'user'||
+                <div class="collapse @if (
+                    $pageSlug == 'role' ||
                     $pageSlug == 'permission'||
-                    $pageSlug == 'role'
-                ) 
-                    show
-                @endif
-                " id="um">
-                    <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'user') class="active " @endif>
-                            <a href="{{ route('um.user.user_list')  }}">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ _('User') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'permission') class="active " @endif>
-                            <a href="{{ route('um.permission.permission_list')  }}">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ _('Permission') }}</p>
-                            </a>
-                        </li>
-                        <li @if ($pageSlug == 'role') class="active " @endif>
-                            <a href="{{ route('um.role.role_list')  }}">
-                                <i class="tim-icons icon-single-02"></i>
-                                <p>{{ _('Role') }}</p>
-                            </a>
-                        </li>
+                    $pageSlug == 'user'
+                ) show @endif" id="user-management">
+                    <ul class="nav pl-2">
+                        @include('backend.partials.menu_buttons', [
+                            'menuItems' => [
+                                ['pageSlug' => 'user', 'routeName' => 'um.user.user_list', 'label' => 'Users'],
+                                ['pageSlug' => 'role', 'routeName' => 'um.role.role_list', 'label' => 'Roles'],
+                                ['pageSlug' => 'permission', 'routeName' => 'um.permission.permission_list', 'label' => 'Permission'],
+                            ]
+                        ])
                     </ul>
                 </div>
             </li>
+
             {{-- <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fab fa-laravel" ></i>

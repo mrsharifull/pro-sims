@@ -42,18 +42,22 @@
                                     <td>{{date('d M, Y', strtotime($permission->created_at))}}</td>
                                     <td>{{$permission->createdBy->name ?? "System Generated"}}</td>
                                     <td>{{$permission->updatedBy->name ?? "System Generated"}}</td>
-                                    <td class="text-center">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
-                                                x-placement="top-end"
-                                                style="position: absolute; transform: translate3d(-57px, -60px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a class="dropdown-item" href="{{route('um.permission.permission_edit',$permission->id)}}">Update</a>
-                                            </div>
-                                        </div>
+                                    <td>
+                                        @include('backend.partials.action_buttons', [
+                                                'menuItems' => [
+                                                    [
+                                                        'routeName' => 'javascript:void(0)',
+                                                        'params' => [$permission->id],
+                                                        'label' => 'View',
+                                                        'className' => 'view',
+                                                    ],
+                                                    [
+                                                        'routeName' => 'um.permission.permission_edit',
+                                                        'params' => [$permission->id],
+                                                        'label' => 'Update',
+                                                    ],
+                                                ],
+                                            ])
                                     </td>
                                 </tr>
                                 @endforeach

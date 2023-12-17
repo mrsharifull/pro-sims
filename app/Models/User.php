@@ -57,7 +57,7 @@ class User extends Authenticatable
     public function deletedBy(){
         return $this->belongsTo(User::class, 'deleted_by');
     }
-    public function getStatusBtn(){
+    public function getBtnStatus(){
         if($this->status == 1){
             return 'Disabled';
         }else{

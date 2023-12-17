@@ -127,42 +127,36 @@ class UserManagementController extends Controller
         $role->name = $req->name;
         $role->created_by = auth()->user()->id;
         $role->save();
-
+        
         $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
         $role->givePermissionTo($permissions);
         return redirect()->route('um.role.role_list')->with('success',"$role->name role created successfully");   
 
 
     }
-    // public function r_edit($id){
-    //     $s['user'] = User::with('role')->first();
-    //     $s['roles'] = Role::where('deleted_at',null)->latest()->get();
-    //     return view('backend.user_management.user.edit',$s);
-    // }
-    // public function r_update(UserRequest $req, $id){
-    //     $user = User::findOrFail($id);
-    //     $user->name = $req->name;
-    //     $user->email = $req->email;
-    //     $user->role_id = $req->role;
-    //     if($req->password){
-    //         $user->password = Hash::make($req->password);
-    //     }
-    //     $user->updated_by = auth()->user()->id;
-    //     $user->update();
-    //     $user->assignRole($user->role->name);
-    //     return redirect()->route('um.user.user_list')->with('success',"$user->name updated successfully");     
-    // }
-    // public function r_delete($id){
-    //     $user = User::findOrFail($id);
-    //     $user->delete();
-    //     return redirect()->route('um.user.user_list')->with('error',"$user->name deleted successfully");   
+    public function r_edit($id){
+        $s['role'] = Role::findOrFail($id);
+        $permissions = Permission::orderBy('name')->get();
+        $s['groupedPermissions'] = $permissions->groupBy(function ($permission) {
+            return $permission->prefix;
+        });
+        return view('backend.user_management.role.edit',$s);
+    }
+    public function r_update(RoleRequest $req, $id){
+        $role = Role::findOrFail($id);
+        $role->name = $req->name;
+        $role->updated_by = auth()->user()->id;
+        $role->update();
+        
+        $permissions = Permission::whereIn('id', $req->permissions)->pluck('name')->toArray();
+        $role->syncPermissions($permissions);
+        return redirect()->route('um.role.role_list')->with('success',"$role->name role updated successfully");        
+    }
+    public function r_delete($id){
+        $role = Role::findOrFail($id);
+        $role->delete();
+        return redirect()->route('um.role.role_list')->with('error',"$role->name deleted successfully");   
 
-    // }
+    }
 
-    // public function r_status($id){
-    //     $user = User::findOrFail($id);
-    //     $this->changeStatus($user);
-    //     return redirect()->route('um.user.user_list')->with('success',"$user->name status change successfully");   
-
-    // }
 }

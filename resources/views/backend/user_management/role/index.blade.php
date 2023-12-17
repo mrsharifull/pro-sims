@@ -41,19 +41,28 @@
                                     <td>{{date('d M, Y', strtotime($role->created_at))}}</td>
                                     <td>{{$role->createdBy->name ?? "System Generated"}}</td>
                                     <td>{{$role->updatedBy->name ?? "System Generated"}}</td>
-                                    <td class="text-center">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
-                                                x-placement="top-end"
-                                                style="position: absolute; transform: translate3d(-57px, -60px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a class="dropdown-item" href="{{route('um.role.role_edit',$role->id)}}">Update</a>
-                                                <a class="dropdown-item" onclick="alert('Are you sure?')" href="{{route('um.role.role_delete',$role->id)}}">Delete</a>
-                                            </div>
-                                        </div>
+                                    <td >
+                                        @include('backend.partials.action_buttons', [
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$role->id],
+                                                    'label' => 'View',
+                                                    'className' => 'view',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.role.role_edit',
+                                                    'params' => [$role->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.role.role_delete',
+                                                    'params' => [$role->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                                 @endforeach

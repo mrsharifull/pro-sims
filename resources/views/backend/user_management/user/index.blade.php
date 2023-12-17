@@ -49,20 +49,33 @@
                                     <td>{{date('d M, Y', strtotime($user->created_at))}}</td>
                                     <td>{{$user->createdBy->name ?? "System Generated"}}</td>
                                     <td>{{$user->updatedBy->name ?? "System Generated"}}</td>
-                                    <td class="text-center">
-                                        <div class="dropdown">
-                                            <a class="btn btn-sm btn-icon-only text-light" href="javascript:void(0)" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow"
-                                                x-placement="top-end"
-                                                style="position: absolute; transform: translate3d(-57px, -60px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                                <a class="dropdown-item" href="{{route('um.user.status.user_edit',$user->id)}}">{{$user->getStatusBtn()}}</a>
-                                                <a class="dropdown-item" href="{{route('um.user.user_edit',$user->id)}}">Update</a>
-                                                <a class="dropdown-item" onclick="alert('Are you sure?')" href="{{route('um.user.user_delete',$user->id)}}">Delete</a>
-                                            </div>
-                                        </div>
+                                    <td>
+                                        @include('backend.partials.action_buttons', [
+                                            'menuItems' => [
+                                                [
+                                                    'routeName' => 'javascript:void(0)',
+                                                    'params' => [$user->id],
+                                                    'label' => 'View',
+                                                    'className' => 'view',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.status.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => $user->getBtnStatus(),
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_edit',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Update',
+                                                ],
+                                                [
+                                                    'routeName' => 'um.user.user_delete',
+                                                    'params' => [$user->id],
+                                                    'label' => 'Delete',
+                                                    'delete' => true,
+                                                ],
+                                            ],
+                                        ])
                                     </td>
                                 </tr>
                                 @endforeach
