@@ -4,16 +4,18 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassRequest extends FormRequest
+class SectionRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
     }
+
     public function rules(): array
     {
         return [
-
+            'name'=>'required',
+            'class_id'=>'required|exists:classes,id',
         ]
         +
         ($this->isMethod('POST') ? $this->store() : $this->update());
@@ -22,16 +24,14 @@ class ClassRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'name' => 'required|unique:classes,name',
-            'number' => 'required|unique:classes,number',
+
         ];
     }
 
     protected function update(): array
     {
         return [
-            'name' => 'required|unique:classes,name,' . $this->route('id'),
-            'number' => 'required|unique:classes,number,' . $this->route('id')
+
         ];
     }
 }

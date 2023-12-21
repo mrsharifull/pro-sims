@@ -1,4 +1,4 @@
-@extends('backend.layouts.master', ['pageSlug' => 'class'])
+@extends('backend.layouts.master', ['pageSlug' => 'section'])
 
 @section('content')
     <div class="row">
@@ -7,10 +7,10 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-7">
-                            <h4 class="card-title">{{_('Class List')}}</h4>
+                            <h4 class="card-title">{{_('Section List')}}</h4>
                         </div>
                         <div class="col-md-5 text-right">
-                            @include('backend.partials.button', ['routeName' => 'setup.class.class_create', 'className' => 'btn-primary', 'label' => 'Add Class'])
+                            @include('backend.partials.button', ['routeName' => 'setup.section.section_create', 'className' => 'btn-primary', 'label' => 'Add Section'])
                         </div>
                     </div>
                 </div>
@@ -20,37 +20,37 @@
                         <table class="table tablesorter datatable">
                             <thead class=" text-primary">
                                 <tr>
-                                    <th>{{_('Number')}}</th>
-                                    <th>{{_('Name')}}</th>
+                                    <th>{{_('Class Name')}}</th>
+                                    <th>{{_('Section Name')}}</th>
                                     <th>{{_('Creation Date')}}</th>
                                     <th>{{_('Creadted By')}}</th>
                                     <th class="text-center">{{_('Action')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($classes as $key=>$class)
+                                @foreach ($sections as $key=>$section)
                                 <tr>
-                                    <td class="text-center">{{$class->number}}</td>
-                                    <td>{{$class->name}}</td>
-                                    <td>{{date('d M, Y', strtotime($class->created_at))}}</td>
-                                    <td>{{$class->createdBy->name ?? "System Generated"}}</td>
+                                    <td>{{$section->class_->name}}</td>
+                                    <td>{{$section->name}}</td>
+                                    <td>{{date('d M, Y', strtotime($section->created_at))}}</td>
+                                    <td>{{$section->createdBy->name ?? "System Generated"}}</td>
                                     <td>
                                         @include('backend.partials.action_buttons', [
                                                 'menuItems' => [
                                                     [
                                                         'routeName' => 'javascript:void(0)',
-                                                        'params' => [$class->id],
+                                                        'params' => [$section->id],
                                                         'label' => 'View',
                                                         'className' => 'view',
                                                     ],
                                                     [
-                                                        'routeName' => 'setup.class.class_edit',
-                                                        'params' => [$class->id],
+                                                        'routeName' => 'setup.section.section_edit',
+                                                        'params' => [$section->id],
                                                         'label' => 'Update',
                                                     ],
                                                     [
-                                                        'routeName' => 'setup.class.class_delete',
-                                                        'params' => [$class->id],
+                                                        'routeName' => 'setup.section.section_delete',
+                                                        'params' => [$section->id],
                                                         'label' => 'Delete',
                                                         'delete' => true,
                                                     ],
@@ -100,7 +100,7 @@ aria-hidden="true">
 $(document).ready(function() {
     $('.view').on('click', function() {
         let id = $(this).data('id');
-        let url = ("{{ route('setup.class.details.class_list', ['id']) }}");
+        let url = ("{{ route('setup.section.details.section_list', ['id']) }}");
         let _url = url.replace('id', id);
         $.ajax({
             url: _url,
@@ -110,34 +110,34 @@ $(document).ready(function() {
                 var result = `
                         <table class="table tablesorter">
                             <tr>
-                                <th class="text-nowrap">Name</th>
+                                <th class="text-nowrap">Class Name</th>
                                 <th>:</th>
-                                <td>${data.class.name}</td>
+                                <td>${data.section.class_.name}</td>
                             </tr>
                             <tr>
-                                <th class="text-nowrap">Number</th>
+                                <th class="text-nowrap">Section Name</th>
                                 <th>:</th>
-                                <td>${data.class.number}</td>
+                                <td>${data.section.name}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Created By</th>
                                 <th>:</th>
-                                <td>${data.class.created_user}</td>
+                                <td>${data.section.created_user}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Updated By</th>
                                 <th>:</th>
-                                <td>${data.class.updated_user}</td>
+                                <td>${data.section.updated_user}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Created At</th>
                                 <th>:</th>
-                                <td>${data.class.created_date}</td>
+                                <td>${data.section.created_date}</td>
                             </tr>
                             <tr>
                                 <th class="text-nowrap">Updated At</th>
                                 <th>:</th>
-                                <td>${data.class.updated_date}</td>
+                                <td>${data.section.updated_date}</td>
                             </tr>
                         </table>
                         `;

@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
         // Create Admin
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@dev.com',
+            'email' => '                                                                                                                                                                                                                               ',
             'password' => Hash::make('admin@dev.com'),
             'role_id' => 2,
         ]);

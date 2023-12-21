@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class ClassController extends Controller
 {
     public function index(){
-        $s['classes'] = Class_::where('deleted_at',null)->latest()->get();
+        $s['classes'] = Class_::where('deleted_at',null)->orderBy('number')->get();
         return view('backend.setup.class.index',$s);
     }
     public function details($id): JsonResponse

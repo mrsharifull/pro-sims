@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\Setup\ClassController;
+use App\Http\Controllers\Backend\Setup\SectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,16 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 			Route::put('edit/{id}', [ClassController::class, 'update'])->name('class_edit');
 			Route::get('status/{id}', [ClassController::class, 'status'])->name('status.class_edit');
 			Route::get('delete/{id}', [ClassController::class, 'delete'])->name('class_delete');
+		});
+		Route::group(['as' => 'section.', 'prefix' => 'section'], function () {
+			Route::get('index', [SectionController::class, 'index'])->name('section_list');
+			Route::get('details/{id}', [SectionController::class, 'details'])->name('details.section_list');
+			Route::get('create', [SectionController::class, 'create'])->name('section_create');
+			Route::post('create', [SectionController::class, 'store'])->name('section_create');
+			Route::get('edit/{id}', [SectionController::class, 'edit'])->name('section_edit');
+			Route::put('edit/{id}', [SectionController::class, 'update'])->name('section_edit');
+			Route::get('status/{id}', [SectionController::class, 'status'])->name('status.section_edit');
+			Route::get('delete/{id}', [SectionController::class, 'delete'])->name('section_delete');
 		});
 
 	});
