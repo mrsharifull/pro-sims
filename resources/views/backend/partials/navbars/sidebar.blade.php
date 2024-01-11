@@ -51,10 +51,12 @@
             <li>
                 <a class="@if(
                         $pageSlug == 'class'||
-                        $pageSlug == 'section'
+                        $pageSlug == 'section'||
+                        $pageSlug == 'academic_division'
                     )@else collapsed @endif" data-toggle="collapse" href="#setup" @if (
                         $pageSlug == 'class'||
-                        $pageSlug == 'section'
+                        $pageSlug == 'section'||
+                        $pageSlug == 'academic_division'
                     ) aria-expanded='true' @else aria-expanded='false' @endif>
                     
                     <i class="fa-solid fa-users-gear"></i>
@@ -64,13 +66,15 @@
 
                 <div class="collapse @if (
                     $pageSlug == 'class'||
-                    $pageSlug == 'section'
+                    $pageSlug == 'section'||
+                    $pageSlug == 'academic_division'
                 ) show @endif" id="setup">
                     <ul class="nav pl-2">
                         @include('backend.partials.menu_buttons', [
                             'menuItems' => [
                                 ['pageSlug' => 'class', 'routeName' => 'setup.class.class_list', 'label' => 'Class'],
                                 ['pageSlug' => 'section', 'routeName' => 'setup.section.section_list', 'label' => 'Section'],
+                                ['pageSlug' => 'academic_division', 'routeName' => 'setup.academic_division.academic_division_list', 'label' => 'Academic Division'],
                             ]
                         ])
                     </ul>

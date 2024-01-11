@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Setup\AcademicDivisionController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -115,6 +116,16 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 			Route::put('edit/{id}', [SectionController::class, 'update'])->name('section_edit');
 			Route::get('status/{id}', [SectionController::class, 'status'])->name('status.section_edit');
 			Route::get('delete/{id}', [SectionController::class, 'delete'])->name('section_delete');
+		});
+		Route::group(['as' => 'academic_division.', 'prefix' => 'academic-division'], function () {
+			Route::get('index', [AcademicDivisionController::class, 'index'])->name('academic_division_list');
+			Route::get('details/{id}', [AcademicDivisionController::class, 'details'])->name('details.academic_division_list');
+			Route::get('create', [AcademicDivisionController::class, 'create'])->name('academic_division_create');
+			Route::post('create', [AcademicDivisionController::class, 'store'])->name('academic_division_create');
+			Route::get('edit/{id}', [AcademicDivisionController::class, 'edit'])->name('academic_division_edit');
+			Route::put('edit/{id}', [AcademicDivisionController::class, 'update'])->name('academic_division_edit');
+			Route::get('status/{id}', [AcademicDivisionController::class, 'status'])->name('status.academic_division_edit');
+			Route::get('delete/{id}', [AcademicDivisionController::class, 'delete'])->name('academic_division_delete');
 		});
 
 	});
