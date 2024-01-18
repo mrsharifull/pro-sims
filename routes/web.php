@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\Setup\AcademicDivisionController;
+use App\Http\Controllers\Backend\Setup\BloodgroupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -128,6 +129,16 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 			Route::get('delete/{id}', [AcademicDivisionController::class, 'delete'])->name('academic_division_delete');
 		});
 
+		Route::group(['as' => 'bloodgroup.', 'prefix' => 'bloodgroup'], function () {
+			Route::get('index', [BloodgroupController::class, 'index'])->name('bloodgroup_list');
+			Route::get('details/{id}', [BloodgroupController::class, 'details'])->name('details.bloodgroup_list');
+			Route::get('create', [BloodgroupController::class, 'create'])->name('bloodgroup_create');
+			Route::post('create', [BloodgroupController::class, 'store'])->name('bloodgroup_create');
+			Route::get('edit/{id}', [BloodgroupController::class, 'edit'])->name('bloodgroup_edit');
+			Route::put('edit/{id}', [BloodgroupController::class, 'update'])->name('bloodgroup_edit');
+			Route::get('status/{id}', [BloodgroupController::class, 'status'])->name('status.bloodgroup_edit');
+			Route::get('delete/{id}', [BloodgroupController::class, 'delete'])->name('bloodgroup_delete');
+		});
 	});
 
 
