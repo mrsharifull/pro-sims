@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\Backend\Setup\ClassController;
 use App\Http\Controllers\Backend\Setup\SectionController;
+use App\Http\Controllers\Backend\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,19 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 		});
 
 	});
+
+	Route::group(['as' => 'student.', 'prefix' => 'student'], function () {
+		Route::get('index', [StudentController::class, 'index'])->name('student_list');
+		Route::get('details/{id}', [StudentController::class, 'details'])->name('details.student_list');
+		Route::get('create', [StudentController::class, 'create'])->name('student_create');
+		Route::post('create', [StudentController::class, 'store'])->name('student_create');
+		Route::get('edit/{id}', [StudentController::class, 'edit'])->name('student_edit');
+		Route::put('edit/{id}', [StudentController::class, 'update'])->name('student_edit');
+		Route::get('status/{id}', [StudentController::class, 'status'])->name('status.student_edit');
+		Route::get('delete/{id}', [StudentController::class, 'delete'])->name('student_delete');
+	});
+		
+
 
 	// Setup Routes 
 	Route::group(['as' => 'setup.', 'prefix' => 'setup'], function () {

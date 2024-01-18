@@ -45,7 +45,11 @@
                     </ul>
                 </div>
             </li>
-
+            @include('backend.partials.menu_buttons', [
+                            'menuItems' => [
+                                ['pageSlug' => 'student', 'routeName' => 'student.student_list', 'label' => 'Student'],
+                            ]
+                        ])
             
             {{-- Setup --}}
             <li>
