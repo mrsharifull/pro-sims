@@ -27,7 +27,14 @@ class BaseModel extends Model
             return 'Deactive';
         }
     }
-    
+    public function getBtnStatus()
+    {
+        if ($this->status == 1) {
+            return 'Disabled';
+        } else {
+            return 'Active';
+        }
+    }
 
     public function getStatusClass()
     {

@@ -27,6 +27,7 @@
                                     <th>{{ _('Name') }}</th>
                                     <th>{{ _('Image') }}</th>
                                     <th>{{ _('Class') }}</th>
+                                    <th>{{ _('Section') }}</th>
                                     <th>{{ _('Division') }}</th>
                                     <th>{{ _('Roll') }}</th>
                                     <th>{{ _('Phone') }}</th>
@@ -40,11 +41,14 @@
                                 @foreach ($students as $student)
                                     <tr>
                                         <td> {{ $student->name }} </td>
-                                        <td> {{ $student->image }} </td>
+                                        <td> 
+                                            <img height="50px" width="50px" src="{{storage_url($student->image)}}" alt="">
+                                        </td>
                                         <td> {{ $student->class->name }} </td>
+                                        <td> {{ $student->section->name }} </td>
                                         <td> {{ $student->ad->name }} </td>
                                         <td> {{ $student->roll }} </td>
-                                        <td> {{ $student->phone }} </td>
+                                        <td> {{ $student->number }} </td>
 
                                         <td>
                                             <span

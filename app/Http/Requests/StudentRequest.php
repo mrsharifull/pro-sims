@@ -17,20 +17,20 @@ class StudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'class_id' => 'required|exists:classes',
-            'section_id' => 'required|exists:sections',
-            'ad_id' => 'required|exists:academic_divisions',
-            'bg_id' => 'required|exists:bloodgroups',
+            'class_id' => 'required|exists:classes,id',
+            'section_id' => 'required|exists:sections,id',
+            'ad_id' => 'required|exists:academic_divisions,id',
+            'bg_id' => 'required|exists:bloodgroups,id',
             'name' => 'required|min:4',
             'father_name' => 'required|min:4',
             'mother_name' => 'required|min:4',
-            'roll' => 'required|integer|min:6|max:8',
-            'registration' => 'required|integer|min:10|max:15',
+            'roll' => 'required|numeric|digits:6',
+            'registration' => 'required|numeric|digits:10',
             'address' => 'required|max:100',
-            'date_of_birth' => 'required|date|after:today',
-            'number' => 'required|integer|min:11|max:11',
-            'parents_number' => 'required|integer|min:11|max:11',
-            'age' => 'required|integer|max:2',
+            'date_of_birth' => 'required|date|before:today',
+            'number' => 'required|numeric|digits:11',
+            'parents_number' => 'required|numeric|digits:11',
+            'age' => 'required|numeric|digits:2',
             'gender' => 'required|in:male,female,other',
             
 
@@ -43,18 +43,14 @@ class StudentRequest extends FormRequest
     protected function store(): array
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'email' => 'required|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ];
     }
 
     protected function update(): array
     {
         return [
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'email' => 'required|unique:users,email,' . $this->route('id'),
-            'password' => 'nullable|min:6|confirmed',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ];
     }
 }

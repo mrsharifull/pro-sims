@@ -100,6 +100,7 @@ Route::group(['middleware' => ['auth', 'permission']], function () {
 		Route::get('index', [StudentController::class, 'index'])->name('student_list');
 		Route::get('details/{id}', [StudentController::class, 'details'])->name('details.student_list');
 		Route::get('create', [StudentController::class, 'create'])->name('student_create');
+		Route::get('class/section/{class_id}', [StudentController::class, 'classSection'])->name('class.section.student_create');
 		Route::post('create', [StudentController::class, 'store'])->name('student_create');
 		Route::get('edit/{id}', [StudentController::class, 'edit'])->name('student_edit');
 		Route::put('edit/{id}', [StudentController::class, 'update'])->name('student_edit');

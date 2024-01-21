@@ -10,6 +10,8 @@
 @endpush
 
 @section('content')
+
+
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -43,10 +45,6 @@
             <input type="file" accept="image/*" name="image" class="form-control">
             @include('alerts.feedback', ['field' => 'image'])
           </div>
-          <div class="form-group">
-            <label>Thumbnail Image</label>
-            <input type="file" accept="image/*" name="thumbnail_image" class="form-control   image-upload">
-          </div>
 
 
           <div class="row">
@@ -72,7 +70,7 @@
             </div>
             <div class="form-group col-md-6">
               <label>Section</label>
-              <select name="section_id" class="form-control section">
+              <select name="section_id" class="form-control section" disabled>
                 <option selected hidden>Select Section</option>
               </select>
               @include('alerts.feedback', ['field' => 'section_id'])
@@ -109,12 +107,7 @@
               @include('alerts.feedback', ['field' => 'registration'])
             </div>
             <div class="form-group col-md-6">
-              <label>Date</label>
-              <input type="date" name="date_of_birth" class="form-control" placeholder="Enter registration" value="{{old('date_of_birth')}}">
-              @include('alerts.feedback', ['field' => 'date_of_birth'])
-            </div>
-            <div class="form-group col-md-6">
-              <label>Date</label>
+              <label>Birthdate</label>
               <input type="date" name="date_of_birth" class="form-control" placeholder="Enter registration" value="{{old('date_of_birth')}}">
               @include('alerts.feedback', ['field' => 'date_of_birth'])
             </div>
@@ -131,7 +124,12 @@
                 <option value="female"> Female</option>
                 <option value="other"> Other</option>
               </select>
-              @include('alerts.feedback', ['field' => 'age'])
+              @include('alerts.feedback', ['field' => 'gender'])
+            </div>
+            <div class="form-group col-md-6">
+              <label>Parents Number</label>
+              <input type="text" name="parents_number" class="form-control" placeholder="Enter parents phone number" value="{{old('parents_number')}}">
+              @include('alerts.feedback', ['field' => 'parents_number'])
             </div>
             <div class="form-group col-md-12">
               <label>Address</label>
@@ -146,3 +144,43 @@
   </div>
 </div>
 @endsection
+@push('js')
+
+<script>
+
+$(document).ready(function() {
+    $('.class').on('change', function(){
+      $('.section').prop('disabled',true);
+      if($(this).val() !== ''){
+        var id = $(this).val();
+        let _url = ("{{ route('student.class.section.student_create', ['class_id']) }}");
+        let __url = _url.replace('class_id', id);
+            $.ajax({
+                url: __url,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var result = '<option selected hidden>Select Section</option>';
+
+                    data.sections.forEach(function(section) {
+                      result +=`
+                              <option value='${section.id}'>${section.name}</option>
+                      `;
+                    });
+                    $('.section').html(result);
+                    $('.section').prop('disabled',false);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching member data:', error);
+                }
+            });
+      }
+    });
+});
+
+      
+</script>
+
+
+
+@endpush
